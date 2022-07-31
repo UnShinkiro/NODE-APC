@@ -9,6 +9,7 @@ batch_count = 0
 #lengths = []
 all_mels = []
 for folder in mel_folders
+    println("Handling folder ", folder)
     sub_folders = readdir(string(source_path, folder))
     for sub_folder in sub_folders
         files = readdir(string(source_path, folder, "/", sub_folder))
