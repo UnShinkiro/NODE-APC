@@ -2,6 +2,7 @@ import Pkg
 Pkg.add("FLAC")
 Pkg.add("FileIO")
 Pkg.add("DSP")
+Pkg.add("FTTW")
 Pkg.add("JLD")
 using FLAC, FileIO, DSP, JLD
 include("./zaf.jl")
