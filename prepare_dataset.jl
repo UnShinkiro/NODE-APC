@@ -1,6 +1,6 @@
 using JLD
-source_path = "log_mels/"
-save_path = "preprocessed_data/dev/"
+source_path = "../log_mels/"
+save_path = "../preprocessed_data/clean-train-360/"
 batch_size = 500
 
 mel_folders = readdir(source_path)
