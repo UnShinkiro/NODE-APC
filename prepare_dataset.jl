@@ -4,10 +4,10 @@ save_path = "../preprocessed_data/clean-train-360/"
 batch_size = 500
 
 mel_folders = readdir(source_path)
-file_count = 0
-batch_count = 0
+global file_count = 0
+global batch_count = 0
 #lengths = []
-all_mels = []
+global all_mels = []
 for folder in mel_folders
     sub_folders = readdir(string(source_path, folder))
     for sub_folder in sub_folders
