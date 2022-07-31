@@ -4,7 +4,7 @@ Pkg.add("FileIO")
 Pkg.add("DSP")
 Pkg.add("FTTW")
 Pkg.add("JLD")
-using FLAC, FileIO, DSP, JLD
+using FLAC, FileIO, DSP, JLD, FTTW
 include("./zaf.jl")
 using .zaf
 #dataset_path = "LibriSpeech/dev-clean/"
