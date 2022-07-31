@@ -1,7 +1,8 @@
 using FLAC, FileIO, DSP, JLD
 include("./zaf.jl")
 using .zaf
-dataset_path = "LibriSpeech/dev-clean/"
+#dataset_path = "LibriSpeech/dev-clean/"
+dataset_path = "../LibriSpeech/train-clean-360/"
 save_path = "log_mels/"
 max_length = 800
 
