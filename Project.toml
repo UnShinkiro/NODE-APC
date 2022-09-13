@@ -1,4 +1,5 @@
 [deps]
+BSON = "fbb218c0-5317-5bc6-957e-2ee96dd4b1f0"
 DSP = "717857b8-e6f2-59f4-9121-6e50c889abd2"
 DiffEqFlux = "aae7a2af-3d4f-5e19-a356-7da93b79d9d0"
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
@@ -10,4 +11,5 @@ IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
 IterTools = "c8e1da08-722c-5040-9ed9-7db0dc04731e"
 JLD = "4138dd39-2aa7-5051-a626-17a0bb65d9c8"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 WAV = "8149f6b0-98f6-5db9-b78f-408fbbb8ef88"
