@@ -79,7 +79,5 @@ function train()
     return APC, post_net
 end
 
-#trained_model, post_net = train()
-trained_model = ""
-post_net = ""
+trained_model, post_net = train()
 @save "360hModel.bson" trained_model post_net
