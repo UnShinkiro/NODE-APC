@@ -46,13 +46,13 @@ function train()
         for idx=1:size(batch_data)[3]
             data = batch_data[:,:,idx]
             length = Int(data[1,end])
-            input = data[:, 1:length-1]
-            output = data[:, length]
+            input = data[:, 1:length-1] |> gpu
+            output = data[:, length] |> gpu
             Flux.reset!(APC)
             Flux.reset!(post_net)
-            features = APC(input)
+            features = APC(input) |> gpu
             #print(size(features))
-            prediction = post_net(features[:,end])
+            prediction = post_net(features[:,end]) |> gpu
             total_loss += sum(abs.(prediction.-output))
         end
         println("batch size: ",size(batch_data), "\tloss:", total_loss)
@@ -64,11 +64,11 @@ function train()
     #evalcb = () -> @show println("Next epoch")
     
     file_list = load(dataset_path * "batch_file_list.jld")["file_list"]
-    for epoch = 1:5
+    for epoch = 1:2
         for file_name in file_list
             #file_name = "dev_speech.jld"
             file_path = dataset_path * file_name
-            batch_x = getdata(file_path) |> gpu
+            batch_x = getdata(file_path)
             println(size(batch_x))
             println("training using $file_name")
             train_loader = Flux.Data.DataLoader(batch_x, batchsize=50, shuffle=true)
