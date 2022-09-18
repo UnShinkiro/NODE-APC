@@ -13,7 +13,10 @@ cp /srv/scratch/z5195063/preprocessed_data.tar.gz $TMPDIR
 cd $TMPDIR
 tar -xf preprocessed_data.tar.gz
 module load julia/1.7.3 
+module load cuda/11.3
 cp -r ~/master/NODE-APC .
 cd NODE-APC
 julia APC_train.jl
 cp 360hModel.bson /srv/scratch/z5195063/
+
+#qsub -I -l select=1:ncpus=8:ngpus=1:mem=32gb,walltime=02:00:00
