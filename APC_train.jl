@@ -86,6 +86,6 @@ function train()
 end
 
 trained_model, post_net = train()
-trained_model = cpu(model)
-post_net = cpu(model)
+trained_model = cpu(trained_model)
+post_net = cpu(post_net)
 @save "360hModel.bson" trained_model post_net
