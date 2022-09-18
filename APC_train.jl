@@ -77,6 +77,7 @@ function train()
                 train_loader = Flux.Data.DataLoader(batch_x, batchsize=50, shuffle=true)
                 Flux.train!(loss, Flux.params(APC, post_net), train_loader, ADAM(0.001))#, cb = Flux.throttle(evalcb, 30))
                 println("validation loss:\n", loss(validation))
+            end
         end
     end
     #Flux.train!(loss, Flux.params(APC, post_net), ncycle(train_loader, 10), ADAM(0.001))#, cb = Flux.throttle(evalcb, 30))
