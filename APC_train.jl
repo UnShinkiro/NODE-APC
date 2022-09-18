@@ -68,7 +68,7 @@ function train()
         for file_name in file_list
             file_path = dataset_path * file_name
             if file_name == "batch_0.jld"
-                validation == getdata(file_path)
+                validation = getdata(file_path) |> gpu
                 continue
             else
                 batch_x = getdata(file_path)
