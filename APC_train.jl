@@ -64,11 +64,11 @@ function train()
     #evalcb = () -> @show println("Next epoch")
     
     file_list = load(dataset_path * "batch_file_list.jld")["file_list"]
+    validation = getdata(dataset_path * "batch_0.jld")
     for epoch = 1:2
         for file_name in file_list
             file_path = dataset_path * file_name
             if file_name == "batch_0.jld"
-                validation = getdata(file_path)
                 continue
             else
                 batch_x = getdata(file_path)
