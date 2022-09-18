@@ -66,13 +66,17 @@ function train()
     file_list = load(dataset_path * "batch_file_list.jld")["file_list"]
     for epoch = 1:2
         for file_name in file_list
-            #file_name = "dev_speech.jld"
             file_path = dataset_path * file_name
-            batch_x = getdata(file_path)
-            println(size(batch_x))
-            println("training using $file_name")
-            train_loader = Flux.Data.DataLoader(batch_x, batchsize=250, shuffle=true)
-            Flux.train!(loss, Flux.params(APC, post_net), train_loader, ADAM(0.001))#, cb = Flux.throttle(evalcb, 30))
+            if file_name == "batch_0.jld"
+                validation == getdata(file_path)
+                continue
+            else
+                batch_x = getdata(file_path)
+                println(size(batch_x))
+                println("training using $file_name")
+                train_loader = Flux.Data.DataLoader(batch_x, batchsize=50, shuffle=true)
+                Flux.train!(loss, Flux.params(APC, post_net), train_loader, ADAM(0.001))#, cb = Flux.throttle(evalcb, 30))
+                println("validation loss:\n", loss(validation))
         end
     end
     #Flux.train!(loss, Flux.params(APC, post_net), ncycle(train_loader, 10), ADAM(0.001))#, cb = Flux.throttle(evalcb, 30))
