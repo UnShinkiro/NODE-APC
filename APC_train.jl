@@ -74,8 +74,9 @@ function train()
                 batch_x = getdata(file_path)
                 println(size(batch_x))
                 println("training using $file_name")
-                train_loader = Flux.Data.DataLoader(batch_x, batchsize=50, shuffle=true)
-                Flux.train!(loss, Flux.params(APC, post_net), train_loader, ADAM(0.001))#, cb = Flux.throttle(evalcb, 30))
+                #train_loader = Flux.Data.DataLoader(batch_x, batchsize=50, shuffle=true)
+                #Flux.train!(loss, Flux.params(APC, post_net), train_loader, ADAM(0.001))#, cb = Flux.throttle(evalcb, 30))
+                Flux.train!(loss, Flux.params(APC, post_net), batch_x, ADAM(0.001))
                 println("validation loss:\n", loss(validation))
             end
         end
