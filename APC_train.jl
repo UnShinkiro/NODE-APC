@@ -3,6 +3,7 @@ using Pkg
 Pkg.activate(".")
 using Flux
 using Flux.Losses: mae
+using CUDA
 using JLD
 using BSON: @save
 using IterTools: ncycle 
@@ -37,8 +38,8 @@ end
 
 
 function train()
-    APC = build_APC_model(80)
-    post_net = build_postnet(80)
+    APC = build_APC_model(80) |> gpu
+    post_net = build_postnet(80) |> gpu
     
     function loss(batch_data)
         total_loss = 0
@@ -67,7 +68,7 @@ function train()
         for file_name in file_list
             #file_name = "dev_speech.jld"
             file_path = dataset_path * file_name
-            batch_x = getdata(file_path)
+            batch_x = getdata(file_path) |> gpu
             println(size(batch_x))
             println("training using $file_name")
             train_loader = Flux.Data.DataLoader(batch_x, batchsize=50, shuffle=true)
@@ -80,4 +81,6 @@ function train()
 end
 
 trained_model, post_net = train()
+trained_model = cpu(model)
+post_net = cpu(model)
 @save "360hModel.bson" trained_model post_net
