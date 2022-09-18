@@ -1,5 +1,6 @@
 [deps]
 BSON = "fbb218c0-5317-5bc6-957e-2ee96dd4b1f0"
+CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
 DSP = "717857b8-e6f2-59f4-9121-6e50c889abd2"
 DiffEqFlux = "aae7a2af-3d4f-5e19-a356-7da93b79d9d0"
 DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
