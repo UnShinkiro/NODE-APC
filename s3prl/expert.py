@@ -23,7 +23,10 @@ class UpstreamExpert(nn.Module):
                 Might not needed if you also save that in your checkpoint file.
                 Can be assigned by the -g option in run_downstream.py
         """
-        super().__init__()
+        super().__init__(**kwargs)
+
+        ckpt = torch.load(ckpt, map_location="cpu")
+        config = ckpt["config"]
         self.name = "[Example UpstreamExpert]"
         self.preprocessor, feat_dim = create_transform(config["data"]["audio"])
 
