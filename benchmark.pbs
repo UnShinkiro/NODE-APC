@@ -16,10 +16,10 @@ cp /srv/scratch/z5195063/train-clean-100.tar.gz $TMPDIR
 cd $TMPDIR
 mkdir LibriSpeech
 cp /srv/scratch/z5195063/change_ymal.sh $TMPDIR/LibriSpeech
-tar -xf dev-clean.tar.gz -C LibriSpeech
-tar -xf test-clean.tar.gz -C LibriSpeech
-tar -xf train-clean-100.tar.gz -C LibriSpeech
 cd LibriSpeech
+tar -xf dev-clean.tar.gz
+tar -xf test-clean.tar.gz
+tar -xf train-clean-100.tar.gz
 bash change_ymal.sh
 module load julia/1.7.3 
 
