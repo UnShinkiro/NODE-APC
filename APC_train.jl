@@ -30,10 +30,8 @@ end
 
 
 function getdata(batch_file_path)
-    all_mels = load(batch_file_path)["all_mels"]
-    #lengths = load("100_speech.jld")["lengths"]
-    
-    return all_mels
+    data = load(batch_file_path)["all_mels"]
+    return [[data[:,frame,idx] for frame=1:Int(data[1,end,idx])] for idx=1:size(data)[3]]
 end
 
 
@@ -43,17 +41,14 @@ function train()
     
     function loss(batch_data)
         total_loss = 0
-        for idx=1:size(batch_data)[3]
-            data = batch_data[:,:,idx]
-            length = Int(data[1,end])
-            input = data[:, 1:length-1] |> gpu
-            output = data[:, length] |> gpu
+        for file in batch_data
+            file |> gpu
             Flux.reset!(APC)
             Flux.reset!(post_net)
-            features = APC(input) |> gpu
-            #print(size(features))
-            prediction = post_net(features[:,end]) |> gpu
-            total_loss += sum(abs.(prediction.-output))
+            output = file[end] |> gpu
+            features = APC.(file[1:end-1]) |> gpu
+            prediction = post_net.(features)[end] |> gpu
+            total_loss += sum(abs.(prediction .- output))
         end
         println("batch size: ",size(batch_data), "\tloss:", total_loss)
         return total_loss
