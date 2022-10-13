@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -l select=1:ncpus=16:ngpus=2:mem=64gb
+#PBS -l select=1:ncpus=24:ngpus=2:mem=64gb
 #PBS -l walltime=96:00:00
 #PBS -M tong.shen@student.unsw.edu.au
 #PBS -m ae
@@ -23,6 +23,6 @@ bash change_ymal.sh
 module load julia/1.7.3 
 
 cd /home/z5195063/master/s3prl/s3prl
-python3 run_downstream.py -n CUSTOM_CPC -m train -u customized_upstream -d ctc -c downstream/ctc/libriphone.yaml
+python3 run_downstream.py -n CUSTOM_CPC_UPDATED_BASELINE -m train -u customized_upstream -d ctc -c downstream/ctc/libriphone.yaml
 
 #qsub -I -l select=1:ncpus=8:ngpus=1:mem=32gb,walltime=02:00:00
