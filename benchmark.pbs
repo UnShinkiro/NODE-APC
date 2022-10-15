@@ -23,6 +23,6 @@ bash change_ymal.sh
 module load julia/1.7.3 
 
 cd /home/z5195063/master/s3prl/s3prl
-python3 run_downstream.py -n APC_CTC -m train -u APC -d ctc -c downstream/ctc/libriphone.yaml
+python3 run_downstream.py -n APC_CTC -m train -u apc -d ctc -c downstream/ctc/libriphone.yaml
 
 #qsub -I -l select=1:ncpus=8:ngpus=1:mem=32gb,walltime=02:00:00
