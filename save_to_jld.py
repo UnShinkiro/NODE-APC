@@ -1,5 +1,5 @@
 from julia import Main
-Main.eval('using Pkg; Pkg.activate(".")')
+Main.eval('using Pkg; Pkg.activate("~/master/NODE-APC")')
 Main.eval('using JLD')
 
 file_list = []
