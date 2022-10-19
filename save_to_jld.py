@@ -26,4 +26,4 @@ for line in file:
         log_mel.append([float(i) for i in data])
 
 Main.fileList = file_list
-Main.eval('save("dev/fileList.jld", "fileList", fileList)')
+Main.eval('save("train-clean-360/fileList.jld", "fileList", fileList)')
