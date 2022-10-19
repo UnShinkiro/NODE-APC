@@ -3,7 +3,7 @@ Main.eval('using Pkg; Pkg.activate(".")')
 Main.eval('using JLD')
 
 file_list = []
-filepath = "train-clean-360/"
+filepath = "train-clean-360-jld/"
 file = open("train-clean-360", "r")
 
 for line in file:
@@ -26,4 +26,4 @@ for line in file:
         log_mel.append([float(i) for i in data])
 
 Main.fileList = file_list
-Main.eval('save("train-clean-360/fileList.jld", "fileList", fileList)')
+Main.eval('save("train-clean-360-jld/fileList.jld", "fileList", fileList)')

@@ -13,11 +13,11 @@ source /home/z5195063/.venv/master/bin/activate
 cd $TMPDIR
 cp /srv/scratch/z5195063/train-clean-360.xz .
 xz -d train-clean-360.xz 
-mkdir train-clean-360
+mkdir train-clean-360-jld
 cp ~/master/NODE-APC/save_to_jld.py .
 module load julia/1.7.3 
 python3 save_to_jld.py
-tar -czvf train-clean-360-jld.tar.gz train-clean-360
+tar -czvf train-clean-360-jld.tar.gz train-clean-360-jld
 mv train-clean-360-jld.tar.gz /srv/scratch/z5195063
 
 #qsub -I -l select=1:ncpus=8:ngpus=1:mem=32gb,walltime=02:00:00
