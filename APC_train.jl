@@ -57,7 +57,7 @@ function train()
     #tx, tl = (batch_x[:,:,5], batch_x[:,max_len+1,5])
     #evalcb = () -> @show println("Next epoch")
     
-    file_list = load(dataset_path * "fileList.jld")["fileList"]
+    file_list = readdir(dataset_path)
     file_count = 0
     for epoch = 1:1
         for file_name in file_list
