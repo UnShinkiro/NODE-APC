@@ -10,12 +10,11 @@ for line in file:
     data = line.strip().split()
     if len(data) == 1:
         if data[0] == '.':  # end of the current utterance
-            #Main.filename = f'{filepath}/{utt_id}.jld'
-            #Main.data = log_mel
-            #Main.eval('data = Float32.(data)')
-            #Main.eval('data = [data[frame,:] for frame=1:size(data)[1]]')
-            #Main.eval('save(filename, "log_mel", data)')
-            pass
+            Main.filename = f'{filepath}/{utt_id}.jld'
+            Main.data = log_mel
+            Main.eval('data = Float32.(data)')
+            Main.eval('data = [data[frame,:] for frame=1:size(data)[1]]')
+            Main.eval('save(filename, "log_mel", data)')
 
         else: # here starts a new utterance
             utt_id = data[0]
@@ -24,8 +23,7 @@ for line in file:
             file_list.append(f'{utt_id}.jld')
 
     else:
-        #log_mel.append([float(i) for i in data])
-        pass
+        log_mel.append([float(i) for i in data])
 
 Main.fileList = file_list
 Main.eval('save("train-clean-360-jld/fileList.jld", "fileList", fileList)')

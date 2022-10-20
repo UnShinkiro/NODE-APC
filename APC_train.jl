@@ -81,4 +81,4 @@ end
 trained_model, post_net = train()
 trained_model = cpu(trained_model)
 post_net = cpu(post_net)
-@save "360hModel.bson" trained_model post_net
+@save "360hModel_v3.bson" trained_model post_net
