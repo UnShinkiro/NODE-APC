@@ -43,6 +43,11 @@ end
 
 function getdata(file_path)
     data = load(file_path)["log_mel"]
+    if (size(data)[1]) > 1200
+        return data[1:1200]
+    else
+        return data
+    end
 end
 
 function train()
