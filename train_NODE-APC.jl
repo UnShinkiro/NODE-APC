@@ -12,6 +12,7 @@ using IterTools: ncycle
 batch_size = 50
 max_len = 1200
 feature_size = 512
+dataset_path = "../train-clean-360-jld/"
 
 function build_node_apc(prenet, node)
     return Chain(
