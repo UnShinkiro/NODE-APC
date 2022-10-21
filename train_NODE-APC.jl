@@ -97,4 +97,4 @@ end
 trained_model, post_net = train()
 trained_model = cpu(trained_model)
 post_net = cpu(post_net)
-@save "360hModel_node-apc.bson" trained_model post_net
+@save "devNODEModel.bson" trained_model post_net
