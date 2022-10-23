@@ -23,7 +23,7 @@ bash change_ymal.sh
 module load julia/1.7.3 
 
 cd /home/z5195063/master/s3prl/s3prl
-python3 run_downstream.py -n CUSTOM_CTC_FIXED -m train -u customized_upstream -d ctc -c downstream/ctc/libriphone.yaml
+python3 run_downstream.py -n CUSTOM_CTC_FIXED2 -m train -u customized_upstream -d ctc -c downstream/ctc/libriphone.yaml
 #python3 run_downstream.py -m evaluate -e result/downstream/CUSTOM_CTC_FIXED/dev-best.ckpt
 
 #qsub -I -l select=1:ncpus=8:ngpus=1:mem=32gb,walltime=02:00:00
