@@ -91,10 +91,11 @@ function train()
     end
     #Flux.train!(loss, Flux.params(APC, post_net), ncycle(train_loader, 10), ADAM(0.001))#, cb = Flux.throttle(evalcb, 30))
     #Flux.train!(loss, Flux.params(APC, post_net), ncycle(train_loader, 10), ADAM(0.0001))#, cb = Flux.throttle(evalcb, 30))
-    return neural_layer, post_net
+    return prenet, neural_layer, post_net
 end
 
-trained_model, post_net = train()
+prenet, trained_model, post_net = train()
+prenet = cpu(prenet)
 trained_model = cpu(trained_model)
 post_net = cpu(post_net)
-@save "devNODEModel.bson" trained_model post_net
+@save "devNODEModel.bson" prenet trained_model post_net
