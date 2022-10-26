@@ -70,7 +70,7 @@ function train()
                 batch_x = getdata(file_path)
                 println("training using $file_name $file_count")
                 train_loader = Flux.Data.DataLoader(batch_x, batchsize=1600, shuffle=false)
-                Flux.train!(loss, Flux.params(APC, post_net), train_loader, ADAM(0.0001))#, cb = Flux.throttle(evalcb, 30))
+                Flux.train!(loss, Flux.params(APC, post_net), train_loader, ADAM(0.001))#, cb = Flux.throttle(evalcb, 30))
             end
         end
     end
