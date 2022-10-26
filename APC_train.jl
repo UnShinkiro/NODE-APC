@@ -42,8 +42,8 @@ function train()
     post_net = build_postnet(80) |> gpu
     
     function loss(file)
-        input = file[1:end-1]
-        output = file[end]
+        input = file[1:end-1] |> gpu
+        output = file[end] |> gpu
         Flux.reset!(APC)
         Flux.reset!(post_net)
         #features = APC.(input) |> gpu
