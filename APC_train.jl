@@ -29,8 +29,8 @@ end
 
 function getdata(file_path)
     data = load(file_path)["log_mel"]
-    if (size(data)[1]) > 1200
-        return data[1:1200]
+    if (size(data)[1]) > 1600
+        return data[1:1600]
     else
         return data
     end
@@ -42,12 +42,14 @@ function train()
     post_net = build_postnet(80) |> gpu
     
     function loss(file)
-        input = file[1:end-1] |> gpu
-        output = file[end] |> gpu
+        input = file[1:end-1]
+        output = file[end]
         Flux.reset!(APC)
         Flux.reset!(post_net)
-        features = APC.(input) |> gpu
-        prediction = post_net.(features)[end] |>gpu
+        #features = APC.(input) |> gpu
+        #prediction = post_net.(features)[end] |>gpu
+        features = [APC(gpu(frame)) for frame in input]
+        prediction = post_net(features[end])
         total_loss = sum(abs.(prediction .- output))
         println("batch size: ",size(file), "\tloss:", total_loss)
         return total_loss
