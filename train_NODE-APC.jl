@@ -43,8 +43,8 @@ end
 
 function getdata(file_path)
     data = load(file_path)["log_mel"]
-    if (size(data)[1]) > 1200
-        return data[1:1200]
+    if (size(data)[1]) > 1600
+        return data[1:1600]
     else
         return data
     end
@@ -64,7 +64,7 @@ function train()
         Flux.reset!(APC)
         #features = APC.(input) |> gpu
         #prediction = post_net.(features)[end] |>gpu
-        features = [APC(cu(frame)) for frame in input] |> gpu
+        features = [node_apc(cu(frame)) for frame in input] |> gpu
         prediction = [post_net(frame) for frame in features] |> gpu
         total_loss = sum([sum(abs.(prediction[idx] .- output[idx])) for idx=1:size(output)[1]])/size(output)[1]
         println("batch size: ",size(file), "\tloss:", total_loss)
@@ -86,8 +86,8 @@ function train()
             else
                 batch_x = getdata(file_path)
                 println("training using $file_name $file_count")
-                train_loader = Flux.Data.DataLoader(batch_x, batchsize=1200, shuffle=false)
-                Flux.train!(loss, Flux.params(node_apc, post_net), train_loader, ADAM(0.0001))#, cb = Flux.throttle(evalcb, 30))
+                train_loader = Flux.Data.DataLoader(batch_x, batchsize=1600, shuffle=false)
+                Flux.train!(loss, Flux.params(node_apc, post_net), train_loader, ADAM(0.001))#, cb = Flux.throttle(evalcb, 30))
             end
         end
     end
