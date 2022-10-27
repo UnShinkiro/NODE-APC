@@ -49,7 +49,7 @@ function train()
         #prediction = post_net.(features)[end] |>gpu
         features = [APC(cu(frame)) for frame in input] |> gpu
         prediction = [post_net(frame) for frame in features] |> gpu
-        total_loss = sum([sum(abs.(prediction[idx] .- output[idx])) for idx=1:size(output)[1]])
+        total_loss = sum([sum(abs.(prediction[idx] .- output[idx])) for idx=1:size(output)[1]])/size(output)[1]
         println("batch size: ",size(file), "\tloss:", total_loss)
         return total_loss
     end
