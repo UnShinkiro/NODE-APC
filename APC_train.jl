@@ -47,7 +47,7 @@ function train()
         Flux.reset!(APC)
         #features = APC.(input) |> gpu
         #prediction = post_net.(features)[end] |>gpu
-        features = [APC(frame) for frame in input] |> gpu
+        features = [APC(cu(frame)) for frame in input] |> gpu
         prediction = post_net(features[end]) |> gpu
         total_loss = sum(abs.(prediction .- output))
         println("batch size: ",size(file), "\tloss:", total_loss)
