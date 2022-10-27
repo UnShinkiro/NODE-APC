@@ -43,12 +43,12 @@ function train()
     
     function loss(file)
         input = file[1:end-1] |> gpu
-        output = file[end] |> gpu
+        output = file[2:end] |> gpu
         Flux.reset!(APC)
         #features = APC.(input) |> gpu
         #prediction = post_net.(features)[end] |>gpu
         features = [APC(cu(frame)) for frame in input] |> gpu
-        prediction = post_net(features[end]) |> gpu
+        prediction = [post_net(frame) for frame in features] |> gpu
         total_loss = sum(abs.(prediction .- output))
         println("batch size: ",size(file), "\tloss:", total_loss)
         return total_loss
