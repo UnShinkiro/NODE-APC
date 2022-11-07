@@ -40,11 +40,11 @@ end
 function evaluate()
     file_list = readdir(dataset_path)
     file_count = 0
-    APC, post_net = buildModel()
+    APC, post_net = buildModel() |> gpu
 
     function loss(file)
-        input = file[1:end-1]
-        output = file[2:end]
+        input = file[1:end-1] |> gpu
+        output = file[2:end] |> gpu
         Flux.reset!(APC)
         #features = APC.(input) |> gpu
         #prediction = post_net.(features)[end] |>gpu
