@@ -10,24 +10,6 @@ using IterTools: ncycle
 dataset_path = "../train-clean-360-jld/"
 using_NODE = true
 
-function buildModel()
-    if using_NODE
-        @load "/srv/scratch/z5195063/devNODEModel.bson" prenet trained_model post_net
-        lspan = (0.0f0,1.0f0)
-        prenet = prenet |> gpu
-        post_net = post_net |> gpu
-        trained_model |> gpu
-        node = NeuralODE(trained_model,lspan,Tsit5(),save_start=false,saveat=1,reltol=1e-7,abstol=1e-9) |> gpu
-        APC = Chain(prenet, node) |> gpu
-        return APC, post_net
-    else
-        @load "/srv/scratch/z5195063/360hModel_v3.bson" trained_model post_net
-        APC = trained_model |> gpu
-        post_net = post_net |> gpu
-        return APC, post_net
-    end
-end
-
 function getdata(file_path)
     data = load(file_path)["log_mel"]
     if (size(data)[1]) > 1600
@@ -40,10 +22,23 @@ end
 function evaluate()
     file_list = readdir(dataset_path)
     file_count = 0
-    APC, post_net = buildModel() |> gpu
+
+    if using_NODE
+        @load "/srv/scratch/z5195063/devNODEModel.bson" prenet trained_model post_net
+        lspan = (0.0f0,1.0f0)
+        prenet = prenet |> gpu
+        post_net = post_net |> gpu
+        trained_model |> gpu
+        node = NeuralODE(trained_model,lspan,Tsit5(),save_start=false,saveat=1,reltol=1e-7,abstol=1e-9) |> gpu
+        APC = Chain(prenet, node) |> gpu
+    else
+        @load "/srv/scratch/z5195063/360hModel_v3.bson" trained_model post_net
+        APC = trained_model |> gpu
+        post_net = post_net |> gpu
+    end
 
     function loss(file)
-        input = file[1:end-1] |> gpu
+        input = file[1:end-1] |> gpugot
         output = file[2:end] |> gpu
         Flux.reset!(APC)
         #features = APC.(input) |> gpu
