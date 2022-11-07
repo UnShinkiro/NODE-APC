@@ -25,29 +25,42 @@ function buildModel()
     return APC, post_net
 end
 
-
-function loss(file)
-    input = file[1:end-1] |> gpu
-    output = file[2:end] |> gpu
-    Flux.reset!(APC)
-    #features = APC.(input) |> gpu
-    #prediction = post_net.(features)[end] |>gpu
-    features = [APC(cu(frame)) for frame in input] |> gpu
-    prediction = [post_net(frame) for frame in features] |> gpu
-    total_loss = sum([sum(abs.(prediction[idx] .- output[idx])) for idx=1:size(output)[1]])/size(output)[1]
-    println("batch size: ",size(file), "\tloss:", total_loss)
-    return total_loss
-end
-
-file_list = readdir(dataset_path)
-global file_count
-file_count = 0
-for file_name in file_list
-    if file_count > 3000
-        break
+function getdata(file_path)
+    data = load(file_path)["log_mel"]
+    if (size(data)[1]) > 1600
+        return data[1:1600]
+    else
+        return data
     end
-    file_count += 1
-    file_path = dataset_path * file_name
-    loss(file)
 end
+
+function evaluate()
+    file_list = readdir(dataset_path)
+    file_count = 0
+    APC, post_net = buildModel()
+
+    function loss(file)
+        input = file[1:end-1] |> gpu
+        output = file[2:end] |> gpu
+        Flux.reset!(APC)
+        #features = APC.(input) |> gpu
+        #prediction = post_net.(features)[end] |>gpu
+        features = [APC(cu(frame)) for frame in input] |> gpu
+        prediction = [post_net(frame) for frame in features] |> gpu
+        total_loss = sum([sum(abs.(prediction[idx] .- output[idx])) for idx=1:size(output)[1]])/size(output)[1]
+        println("batch size: ",size(file), "\tloss:", total_loss)
+        return total_loss
+    end
+
+    for file_name in file_list
+        if file_count > 3000
+            break
+        end
+        file_count += 1
+        file_path = dataset_path * file_name
+        file = getdata(file_path)
+        loss(file)
+    end
+end
+
 
