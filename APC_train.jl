@@ -8,7 +8,7 @@ using JLD
 using BSON: @save
 using IterTools: ncycle 
 feature_size = 512
-dataset_path = "../train-clean-360-jld/"
+dataset_path = "../dev-clean-jld/"
 
 function build_APC_model(input_dimension)
     return Chain(
