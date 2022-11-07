@@ -15,7 +15,7 @@ using_NODE = true
 if using_NODE
     @load "/srv/scratch/z5195063/devNODEModel.bson" prenet trained_model post_net
     lspan = (0.0f0,1.0f0)
-    node = NeuralODE(neural_layer,lspan,Tsit5(),save_start=false,saveat=1,reltol=1e-7,abstol=1e-9)
+    node = NeuralODE(trained_model,lspan,Tsit5(),save_start=false,saveat=1,reltol=1e-7,abstol=1e-9)
     APC = Chain(prenet, node) |> gpu
     post_net = post_net |> gpu
 else
