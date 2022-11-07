@@ -7,22 +7,24 @@ using DiffEqFlux
 using DifferentialEquations
 using BSON: @load
 using IterTools: ncycle 
-global APC
-global post_net
 dataset_path = "../train-clean-360-jld/"
 using_NODE = true
 
-if using_NODE
-    @load "/srv/scratch/z5195063/devNODEModel.bson" prenet trained_model post_net
-    lspan = (0.0f0,1.0f0)
-    node = NeuralODE(trained_model,lspan,Tsit5(),save_start=false,saveat=1,reltol=1e-7,abstol=1e-9)
-    APC = Chain(prenet, node) |> gpu
-    post_net = post_net |> gpu
-else
-    @load "/srv/scratch/z5195063/360hModel_v3.bson" trained_model post_net
-    APC = trained_model |> gpu
-    post_net = post_net |> gpu
+function buildModel()
+    if using_NODE
+        @load "/srv/scratch/z5195063/devNODEModel.bson" prenet trained_model post_net
+        lspan = (0.0f0,1.0f0)
+        node = NeuralODE(trained_model,lspan,Tsit5(),save_start=false,saveat=1,reltol=1e-7,abstol=1e-9)
+        APC = Chain(prenet, node) |> gpu
+        post_net = post_net |> gpu
+    else
+        @load "/srv/scratch/z5195063/360hModel_v3.bson" trained_model post_net
+        APC = trained_model |> gpu
+        post_net = post_net |> gpu
+    end
+    return APC, post_net
 end
+
 
 function loss(file)
     input = file[1:end-1] |> gpu
@@ -38,7 +40,8 @@ function loss(file)
 end
 
 file_list = readdir(dataset_path)
-global file_count = 0
+global file_count
+file_count = 0
 for file_name in file_list
     if file_count > 3000
         break
