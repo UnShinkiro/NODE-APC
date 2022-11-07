@@ -38,7 +38,7 @@ function loss(file)
 end
 
 file_list = readdir(dataset_path)
-file_count = 0
+global file_count = 0
 for file_name in file_list
     if file_count > 3000
         break
