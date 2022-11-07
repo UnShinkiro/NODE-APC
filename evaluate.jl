@@ -38,7 +38,7 @@ function evaluate()
     end
 
     function loss(file)
-        input = file[1:end-1] |> gpugot
+        input = file[1:end-1] |> gpu
         output = file[2:end] |> gpu
         Flux.reset!(APC)
         #features = APC.(input) |> gpu
