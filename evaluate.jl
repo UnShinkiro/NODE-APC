@@ -43,8 +43,8 @@ function evaluate()
     APC, post_net = buildModel()
 
     function loss(file)
-        input = file[1:end-1] |> gpu
-        output = file[2:end] |> gpu
+        input = file[1:end-1]
+        output = file[2:end]
         Flux.reset!(APC)
         #features = APC.(input) |> gpu
         #prediction = post_net.(features)[end] |>gpu
