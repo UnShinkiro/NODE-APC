@@ -11,12 +11,12 @@ cd $PBS_O_WORKDIR
 
 source /home/z5195063/.venv/master/bin/activate
 cd $TMPDIR
-cp /srv/scratch/z5195063/dev-clean.tar.gz $TMPDIR
+#cp /srv/scratch/z5195063/dev-clean.tar.gz $TMPDIR
 cp /srv/scratch/z5195063/test-clean.tar.gz $TMPDIR
-cp /srv/scratch/z5195063/train-clean-100.tar.gz $TMPDIR
-tar -xf dev-clean.tar.gz 
+#cp /srv/scratch/z5195063/train-clean-100.tar.gz $TMPDIR
+#tar -xf dev-clean.tar.gz
 tar -xf test-clean.tar.gz
-tar -xf train-clean-100.tar.gz
+#tar -xf train-clean-100.tar.gz
 cp /srv/scratch/z5195063/change_ymal.sh $TMPDIR/LibriSpeech
 cd LibriSpeech
 bash change_ymal.sh
