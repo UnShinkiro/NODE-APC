@@ -14,13 +14,13 @@ using_model = ARGS[1]
 using_NODE = false
 using_downscale = false
 
-if using_model == 'n'
+if using_model == "n"
     using_NODE = false
     using_downscale = false
-elseif using_model == 'd'
+elseif using_model == "d"
     using_NODE = false
     using_downscale = true
-elseif using_model == 'a'
+elseif using_model == "a"
     using_NODE = true
     using_downscale = false
 end
@@ -40,6 +40,7 @@ function evaluate()
     file_count = 0
 
     if using_NODE
+        print("using NODE-APC")
         @load "../devNODEModel.bson" prenet trained_model post_net
         lspan = (0.0f0,1.0f0)
         prenet = prenet |> gpu
@@ -48,10 +49,12 @@ function evaluate()
         node = NeuralODE(trained_model,lspan,Tsit5(),save_start=false,saveat=1,reltol=1e-7,abstol=1e-9) |> gpu
         APC = Chain(prenet, node) |> gpu
     elseif using_downscale
+        print("using downscale")
         @load "../devAPCmodel.bson" trained_model post_net
         APC = trained_model |> gpu
         post_net = post_net |> gpu
     else
+        print("using 360hTrained")
         @load "../360hModel_v3.bson" trained_model post_net
         APC = trained_model |> gpu
         post_net = post_net |> gpu
