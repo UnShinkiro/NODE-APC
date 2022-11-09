@@ -6,7 +6,7 @@
 #PBS -l jobfs=200GB
 #PBS -q gpuvolta
 #PBS -P wa66
-#PBS -l walltime=60:00:00
+#PBS -l walltime=48:00:00
 #PBS -l storage=gdata/wa66
 #PBS -l wd
 
@@ -18,4 +18,4 @@ cp /g/data/wa66/Tong/devNODEmodel.bson .
 cp /g/data/wa66/Tong/train-clean-360-jld.tar.gz .
 tar -xf train-clean-360-jld.tar.gz
 cd NODE-APC
-julia evaluate.jl > $HOME/devNODEmodel.txt
+julia evaluate.jl a > $HOME/devNODEmodel.txt
