@@ -4,6 +4,7 @@ using Flux
 using CUDA
 using JLD
 using DiffEqFlux
+using Random
 using DifferentialEquations
 using BSON: @load
 using IterTools: ncycle 
