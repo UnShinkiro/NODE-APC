@@ -45,7 +45,7 @@ function evaluate()
         lspan = (0.0f0,1.0f0)
         prenet = prenet |> gpu
         post_net = post_net |> gpu
-        trained_model |> gpu
+        trained_model = trained_model |> gpu
         node = NeuralODE(trained_model,lspan,Tsit5(),save_start=false,saveat=1,reltol=1e-7,abstol=1e-9) |> gpu
         APC = Chain(prenet, node) |> gpu
     elseif using_downscale
