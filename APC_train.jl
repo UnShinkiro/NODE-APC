@@ -78,4 +78,4 @@ end
 trained_model, post_net = train()
 trained_model = cpu(trained_model)
 post_net = cpu(post_net)
-@save "devAPCmodel.bson" trained_model post_net
+@save "devDownscaledAPCmodel.bson" trained_model post_net
