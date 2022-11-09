@@ -39,7 +39,7 @@ function evaluate()
     file_count = 0
 
     if using_NODE
-        @load "/srv/scratch/z5195063/devNODEModel.bson" prenet trained_model post_net
+        @load "../devNODEModel.bson" prenet trained_model post_net
         lspan = (0.0f0,1.0f0)
         prenet = prenet |> gpu
         post_net = post_net |> gpu
@@ -47,11 +47,11 @@ function evaluate()
         node = NeuralODE(trained_model,lspan,Tsit5(),save_start=false,saveat=1,reltol=1e-7,abstol=1e-9) |> gpu
         APC = Chain(prenet, node) |> gpu
     elseif using_downscale
-        @load "/src/scratch/z5195063/devAPCmodel.bson" trained_model post_net
+        @load "../devAPCmodel.bson" trained_model post_net
         APC = trained_model |> gpu
         post_net = post_net |> gpu
     else
-        @load "/srv/scratch/z5195063/360hModel_v3.bson" trained_model post_net
+        @load "../360hModel_v3.bson" trained_model post_net
         APC = trained_model |> gpu
         post_net = post_net |> gpu
     end
@@ -80,4 +80,4 @@ function evaluate()
     end
 end
 
-#evaluate()
+evaluate()
