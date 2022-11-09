@@ -14,10 +14,6 @@ function build_APC_model(input_dimension)
     return Chain(
             LSTM(input_dimension, 512),
             Dropout(0.5),
-            LSTM(512, 512),
-            Dropout(0.5),
-            LSTM(512, 512),
-            Dropout(0.5),
             LSTM(512, 512))
 end 
 

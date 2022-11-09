@@ -5,7 +5,7 @@
 #PBS -M tong.shen@student.unsw.edu.au
 #PBS -m ae
 #PBS -j oe
-#PBS -o /home/z5195063/Output_Report_Training
+#PBS -o /home/z5195063/Output_Report_Downscaled_Training
 
 cd $PBS_O_WORKDIR
 
