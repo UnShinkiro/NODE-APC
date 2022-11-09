@@ -41,7 +41,7 @@ function evaluate()
 
     if using_NODE
         print("using NODE-APC")
-        @load "../devNODEModel.bson" prenet trained_model post_net
+        @load "../devNODEmodel.bson" prenet trained_model post_net
         lspan = (0.0f0,1.0f0)
         prenet = prenet |> gpu
         post_net = post_net |> gpu
