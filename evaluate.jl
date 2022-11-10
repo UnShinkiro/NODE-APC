@@ -11,21 +11,6 @@ using IterTools: ncycle
 dataset_path = "../train-clean-360-jld/"
 using_model = ARGS[1]
 
-using_NODE = false
-using_downscale = false
-
-if using_model == "n"
-    using_NODE = false
-    using_downscale = false
-elseif using_model == "d"
-    using_NODE = false
-    using_downscale = true
-elseif using_model == "a"
-    using_NODE = true
-    using_downscale = false
-end
-
-print(using_NODE, using_downscale)
 function getdata(file_path)
     data = load(file_path)["log_mel"]
     if (size(data)[1]) > 1600
@@ -39,7 +24,7 @@ function evaluate()
     file_list = readdir(dataset_path)
     file_count = 0
 
-    if using_NODE
+    if using_model == "node"
         print("using NODE-APC")
         @load "../devNODEmodel.bson" prenet trained_model post_net
         lspan = (0.0f0,1.0f0)
@@ -48,13 +33,18 @@ function evaluate()
         trained_model = trained_model |> gpu
         node = NeuralODE(trained_model,lspan,Tsit5(),save_start=false,saveat=1,reltol=1e-7,abstol=1e-9) |> gpu
         APC = Chain(prenet, node) |> gpu
-    elseif using_downscale
-        print("using downscale")
+    elseif using_model == "dev"
+        print("using dev trained full")
         @load "../devAPCmodel.bson" trained_model post_net
         APC = trained_model |> gpu
         post_net = post_net |> gpu
+    elseif using_model == "downscale"
+        print("using dev trained downscale")
+        @load "../devDownscaledAPCmodel" trained_model post_net
+        APC = trained_model |> gpu
+        post_net = post_net |> gpu
     else
-        print("using 360hTrained")
+        print("using 360hTrained full")
         @load "../360hModel_v3.bson" trained_model post_net
         APC = trained_model |> gpu
         post_net = post_net |> gpu
