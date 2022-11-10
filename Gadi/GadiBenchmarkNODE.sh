@@ -25,4 +25,5 @@ module load julia/1.7.1
 module load cuda/10.1
 
 cd /home/561/ts7017/copy_s3prl/s3prl/s3prl
+pip install -e ..
 python3 run_downstream.py -n NODE_CTC -m train -u customized_upstream -d ctc -c downstream/ctc/libriphone.yaml
