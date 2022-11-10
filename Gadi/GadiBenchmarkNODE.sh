@@ -26,4 +26,4 @@ module load cuda/10.1
 
 cd /home/561/ts7017/copy_s3prl/s3prl/s3prl
 pip install -e ..
-python3 run_downstream.py -n NODE_CTC -m train -u customized_upstream -d ctc -c downstream/ctc/libriphone.yaml
+python3 run_downstream.py -n NODE_CTC -m train -u customized_upstream -d ctc -c downstream/ctc/libriphone.yaml $HOME/NODE_benchmark.txt
