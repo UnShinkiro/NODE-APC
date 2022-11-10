@@ -20,6 +20,7 @@ tar -xf train-clean-100.tar.gz
 cp /g/data/wa66/Tong/change_ymal_NODE.sh LibriSpeech/
 cd LibriSpeech
 bash change_ymal_NODE.sh
+module load python3/3.8.5
 module load julia/1.7.1
 module load cuda/10.1
 
