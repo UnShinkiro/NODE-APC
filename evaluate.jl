@@ -64,13 +64,17 @@ function evaluate()
     end
 
     for file_name in file_list
-        if file_count > 3000
+        if file_count < 1925
+            file_count += 1
+            continue
+        elseif file_count > 3000
             break
+        else
+            file_count += 1
+            file_path = dataset_path * file_name
+            file = getdata(file_path)
+            loss(file)
         end
-        file_count += 1
-        file_path = dataset_path * file_name
-        file = getdata(file_path)
-        loss(file)
     end
 end
 
